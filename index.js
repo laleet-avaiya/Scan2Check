@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var url =
-  "mongodb+srv://lmavaiya:111996A@M@cluster0-ivhjb.mongodb.net/HomeServices?retryWrites=true";
+  "mongodb+srv://lmavaiya:111996A@M@cluster0-ivhjb.mongodb.net/scan2check?retryWrites=true";
 mongoose.connect(url, { useNewUrlParser: true }, () =>
   console.log("Database Connected.")
 );
@@ -113,9 +113,6 @@ app.get("/services/:id", (req, res) => {
 app.post("/insert_service/", (req, res) => {
   var new_service = new Services();
   new_service.service_name = req.body.name;
-  new_service.service_tnc = "1";
-  new_service.service_charge = "2";
-  new_service.service_icon = "3";
 
   new_service
     .save()
@@ -135,9 +132,6 @@ app.post("/update_service/", (req, res) => {
   // console.log(id);
   updated_service._id = id;
   updated_service.service_name = req.body.name;
-  updated_service.service_tnc = "1";
-  updated_service.service_charge = "2";
-  updated_service.service_icon = "3";
 
   Services.findByIdAndUpdate(id, updated_service, { new: true }, function(
     err,
