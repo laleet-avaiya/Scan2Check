@@ -67,6 +67,7 @@ app.post("/login", function(req, res) {
 // -------------------------------------- Admin Registration -------------------------------------
 //------------------------------------------------------------------------------------------------
 app.post("/register", function(req, res) {
+  
   var new_user = new Admin();
   new_user.email = req.body.email;
   new_user.password = bcrypt.hashSync(
@@ -74,6 +75,12 @@ app.post("/register", function(req, res) {
     bcrypt.genSaltSync(8),
     null
   );
+
+  new_user.name = req.body.name;
+  new_user.phone = req.body.phone;
+  new_user.business_name = req.body.business_name;
+  new_user.business_address = req.body.business_address;
+
   new_user
     .save()
     .then(() => res.json({ msg: "Registered Successfully" }))
