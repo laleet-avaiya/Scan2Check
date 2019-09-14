@@ -28,6 +28,10 @@ mongoose.model("Admin", {
   business_address: {
     type: String,
     required: true
+  },
+  registered_on: {
+    type: Date,
+    require: true
   }
 });
 
