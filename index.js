@@ -45,7 +45,7 @@ const Services = mongoose.model("Services");
 // ------------------------------------------Home------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 
-app.get("/", (req, res) => res.send("service on..."));
+app.get("/", (req, res) => res.json({ msg: "service on..." }));
 
 //------------------------------------------------------------------------------------------------
 // -------------------------------------- Admin Login --------------------------------------------
@@ -58,7 +58,7 @@ app.post("/login", function(req, res) {
       // res.send("password Match");
       res.json(user);
     } else {
-      res.send("password did not Match");
+      res.json({ msg: "password did not Match" });
     }
   });
 });
@@ -76,10 +76,10 @@ app.post("/register", function(req, res) {
   );
   new_user
     .save()
-    .then(() => res.send("Registered Successfully"))
+    .then(() => res.json({ msg: "Registered Successfully" }))
     .catch(err => {
-      if (err.code == "11000") res.send("User Already exits");
-      else res.send("Something wrong happened Try Again.");
+      if (err.code == "11000") res.json({ msg: "User Already exits" });
+      else res.json({ msg: "Something wrong happened Try Again." });
     });
 });
 
@@ -90,7 +90,7 @@ app.post("/register", function(req, res) {
 app.get("/services/", (req, res) => {
   var query = Services.find({});
   query.exec(function(err, docs) {
-    if (err) res.send({ msg: "Not Found" });
+    if (err) res.json({ msg: "Not Found" });
 
     res.json(docs);
   });
@@ -118,8 +118,8 @@ app.post("/insert_service/", (req, res) => {
     .save()
     .then(() => res.send("Service Added Successfully"))
     .catch(err => {
-      if (err.code == "11000") res.send("Service Already exits");
-      else res.send("Something wrong happened Try Again.");
+      if (err.code == "11000") res.json({ msg: "Service Already exits" });
+      else res.json({ msg: "Something wrong happened Try Again." });
     });
 });
 
@@ -149,7 +149,7 @@ app.post("/delete_service/", (req, res) => {
   // console.log(req.body.id);
   Services.findById(mongoose.Types.ObjectId(req.body.id))
     .then(ser => ser.remove())
-    .then(() => res.send("Deleted"))
+    .then(() => res.json({ msg: "Deleted" }))
     .catch(e => res.send(e));
 });
 
