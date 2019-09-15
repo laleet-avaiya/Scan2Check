@@ -38,8 +38,8 @@ mongoose.connect(url, { useNewUrlParser: true }, () =>
 );
 
 require("./admin");
-const Admin = mongoose.model("Admin");
-const Services = mongoose.model("Services");
+const Admin = mongoose.model("User");
+const Services = mongoose.model("Barcodes");
 
 //-----------------------------------------------------------------------------------------------
 // ------------------------------------------Home------------------------------------------------
@@ -119,14 +119,16 @@ app.get("/services/:id", (req, res) => {
 ------------------------------------------- Insert New Service  ------------------------------------
 --------------------------------------------------------------------------------------------------*/
 app.post("/insert_service/", (req, res) => {
-  var new_service = new Services();
-  new_service.service_name = req.body.name;
+  var new_code = new Services();
+  new_code.code = req.body.code;
+  new_code.validity = req.body.validity;
+  new_code.client_id = req.body.client_id;
 
-  new_service
+  new_code
     .save()
-    .then(() => res.send("Service Added Successfully"))
+    .then(() => res.json({ msg: "Code Added Successfully" }))
     .catch(err => {
-      if (err.code == "11000") res.json({ msg: "Service Already exits" });
+      if (err.code == "11000") res.json({ msg: "Code Already exits" });
       else res.json({ msg: "Something wrong happened Try Again." });
     });
 });
@@ -134,21 +136,21 @@ app.post("/insert_service/", (req, res) => {
 /*--------------------------------------------------------------------------------------------------
 ------------------------------------------- Update  Service  ---------------------------------------
 --------------------------------------------------------------------------------------------------*/
-app.post("/update_service/", (req, res) => {
-  var updated_service = new Services();
-  var id = req.body.id;
-  // console.log(id);
-  updated_service._id = id;
-  updated_service.service_name = req.body.name;
+// app.post("/update_service/", (req, res) => {
+//   var updated_service = new Services();
+//   var id = req.body.id;
+//   // console.log(id);
+//   updated_service._id = id;
+//   updated_service.code = req.body.name;
 
-  Services.findByIdAndUpdate(id, updated_service, { new: true }, function(
-    err,
-    model
-  ) {
-    if (err) res.send(err);
-    else res.send(model);
-  });
-});
+//   Services.findByIdAndUpdate(id, updated_service, { new: true }, function(
+//     err,
+//     model
+//   ) {
+//     if (err) res.send(err);
+//     else res.send(model);
+//   });
+// });
 
 /*--------------------------------------------------------------------------------------------------
 ------------------------------------------- Delete  Service  ---------------------------------------

@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 // Create Schema and Model it
-mongoose.model("Admin", {
+mongoose.model("User", {
   // _id: mongoose.Schema.Types.ObjectId,
   email: {
     type: String,
@@ -35,12 +35,20 @@ mongoose.model("Admin", {
   }
 });
 
-mongoose.model("Services", {
+mongoose.model("Barcodes", {
   // _id: mongoose.Schema.Types.ObjectId,
-  service_name: {
+  client_id: {
+    type: String,
+    required: true
+  },
+  code: {
     type: String,
     unique: true,
     required: true,
     dropDups: true
+  },
+  validity: {
+    type: Number,
+    require: true
   }
 });
