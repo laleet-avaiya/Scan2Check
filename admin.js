@@ -50,5 +50,9 @@ mongoose.model("Barcodes", {
   validity: {
     type: Number,
     require: true
+  },
+  packed_on: {
+    type: Date,
+    require: true
   }
 });

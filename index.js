@@ -82,6 +82,7 @@ app.post("/register", function(req, res) {
   new_user.business_address = req.body.business_address;
   new_user.registered_on = Date.now();
 
+
   new_user
     .save()
     .then(() => res.json({ msg: "Registered Successfully" }))
@@ -123,6 +124,7 @@ app.post("/insert_service/", (req, res) => {
   new_code.code = req.body.code;
   new_code.validity = req.body.validity;
   new_code.client_id = req.body.client_id;
+  new_code.packed_on = Date.UTC();
 
   new_code
     .save()
