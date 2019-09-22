@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var bcrypt = require("bcrypt-nodejs");
 var cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(function(req, res, next) {
 // app.use(corsMiddleware);
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
 var url =
   "mongodb+srv://lmavaiya:111996A@M@cluster0-ivhjb.mongodb.net/scan2check?retryWrites=true";
@@ -46,6 +48,11 @@ const Services = mongoose.model("Barcodes");
 //-----------------------------------------------------------------------------------------------
 
 app.get("/", (req, res) => res.json({ msg: "service on..." }));
+
+// index page
+app.get("/home", function(req, res) {
+  res.render("pages/index");
+});
 
 //------------------------------------------------------------------------------------------------
 // -------------------------------------- Admin Login --------------------------------------------
@@ -92,6 +99,42 @@ app.post("/register", function(req, res) {
 });
 
 /*--------------------------------------------------------------------------------------------------
+/------------------------------------------ Response to Scan ---------------------------------------
+**------------------------------------------------------------------------------------------------*/
+
+app.get("/scan/:code", function(req, res) {
+  console.log(req.params.code);
+
+  var query = {};
+
+  if (req.params.code) {
+    query = {
+      $or: [{ code: req.params.code }]
+    };
+  }
+
+  Services.find(query, function(error, data) {
+    if (error) {
+      // return error
+      res.json(error);
+    }
+    //return data
+    var client_id = data.client_id;
+    // Client process
+    data = data[0];
+    var curr_data = {
+      _id: data._id,
+      code: data.code,
+      validity: data.validity,
+      client_id: data.client_id,
+      packed_on: data.packed_on
+    };
+    console.log(curr_data);
+    res.render("pages/index", curr_data);
+  });
+});
+
+/*--------------------------------------------------------------------------------------------------
 /------------------------------------------ List of Services ---------------------------------------
 **------------------------------------------------------------------------------------------------*/
 
@@ -107,7 +150,7 @@ app.get("/services/", (req, res) => {
 /*------------------------------------------------------------------------------------------------
 --------------------------------------- Services By client id  ------------------------------------------
 ------------------------------------------------------------------------------------------------*/
-app.get("/services/:id", (req, res) => {
+app.get("/service/:id", (req, res) => {
   var query = Services.findById(req.params.id);
   query.exec(function(err, docs) {
     if (err) res.send({ msg: "Not Found" });
