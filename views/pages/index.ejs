@@ -9,32 +9,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Document</title>
+
+    <style>
+        body {
+            background-color: #077c38;
+        }
+
+        .rounded-border {
+            border-radius: 30px 30px 0px 0px;
+            height: 100vh;
+        }
+
+        .rounded-border1 {
+            border-radius: 10px;
+        }
+
+        p {
+            line-height: 1;
+            line-break: normal;
+        }
+    </style>
 </head>
 
 <body>
 
+    <h4 class="mt-5 m-3 text-white font-weight-bold">Gopal Namkeen</h4>
+    <p class="m-3 text-white text-monospace">Parmeswar Cold Storage, Ahemadabad-Modasa Road, Dhegam, Gandhinagar,
+        Gujarat 382007.</p>
+    <div class="mt-5">
+        <div class="card rounded-border">
 
-    <div class="container mt-5 ">
+            <div class="container">
 
-        <div class="card">
-            <div class="card-body">
-                <!-- <div class="card-header bg-primary text-white"><%=client_id%></div> -->
-                <h4 class="card-title">Gopal Namkeen</h4>
 
-                <p class="card-text">Barcode: <%=code%></p>
-                <p class="card-text">Packed on: <%=packed_on%></p>
-                <p class="card-text">Valid for: <%=validity%> months</p>
-                <p class="card-text">Valid till: 28th Aug. 2033</p>
+                <div class="mt-4 card p-3 rounded-border1">
+                    <!-- <div class="card-header bg-primary text-white"><%=client_id%></div> -->
 
-                <a href="#" class="card-link">Other Product</a>
-                <a href="#" class="card-link">Complete Detail</a>
+                    <p class="font-weight-bold">Barcode : <span class="card-text "><%=code%></span></p>
+                    <p class="font-weight-bold">Packed on : <span class="card-text "><%=packed_on%></span></p>
+                    <p class="font-weight-bold">Valid for : <span class="card-text "><%=validity%> months</span></p>
+                    <p class="font-weight-bold">Valid till : <span class="card-text">28th Aug. 2033</span></p>
+
+
+                </div>
             </div>
+
+
+
+
+
         </div>
-
-
-
     </div>
-    </div>
+
+
+
 
 </body>
 
